@@ -1,4 +1,4 @@
-FROM cbayle/ubuntu:14.04
+FROM ubuntu:14.04
 
 MAINTAINER Martin GOYOT <martin.goyot@enalean.com>
 
