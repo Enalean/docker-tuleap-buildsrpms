@@ -6,6 +6,7 @@ ADD run.sh /run.sh
 
 ## Install dependancies
 ## Install base node modules
+# Add ant & openjdk-7-jdk or openfire
 RUN apt-get update && \
     apt-get install -y \
     nodejs \
@@ -13,8 +14,9 @@ RUN apt-get update && \
     build-essential \
     rpm \
     libfontconfig \
-    git ; \
-    ln -s /usr/bin/nodejs /usr/bin/node ; \
+    git \
+    ant openjdk-7-jdk \
+    ; ln -s /usr/bin/nodejs /usr/bin/node ; \
     npm install -g \
     grunt-cli \
     bower \
