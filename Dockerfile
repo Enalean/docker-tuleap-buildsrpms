@@ -25,4 +25,4 @@ RUN apt-get update && \
 VOLUME ["/tuleap"]
 VOLUME ["/srpms"]
 
-ENTRYPOINT ["/run.sh"]
+#ENTRYPOINT ["/run.sh"]
