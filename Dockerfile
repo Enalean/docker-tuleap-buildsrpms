@@ -2,8 +2,6 @@ FROM ubuntu:14.04
 
 MAINTAINER Martin GOYOT <martin.goyot@enalean.com>
 
-ADD run.sh /run.sh
-
 ## Install dependancies
 ## Install base node modules
 # Add ant & openjdk-7-jdk for openfire
@@ -23,10 +21,11 @@ RUN apt-get update && \
     grunt-cli \
     bower \
     less \
-    recess ; \
-    chmod u+x /run.sh
+    recess
 
 VOLUME ["/tuleap"]
 VOLUME ["/srpms"]
 
+ADD run.sh /run.sh
+RUN chmod u+x /run.sh
 #ENTRYPOINT ["/run.sh"]

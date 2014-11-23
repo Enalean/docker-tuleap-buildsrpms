@@ -11,3 +11,9 @@ make -C $BASE_PATH/tools/rpm srpms-docker OS="rhel5";
 mv /root/rpmbuild/SRPMS/* /srpms/rhel5;
 make -C $BASE_PATH/tools/rpm srpms-docker OS="rhel5" PKG_NAME="codendi_st";
 mv /root/rpmbuild/SRPMS/* /srpms/rhel5-st;
+
+if [ ! -z "$UID" -a ! -z "$GID" ]
+then
+	echo "======== make srpms owned by $UID.$GID ======="
+	chown -R $UID.$GID /srpms 
+fi
