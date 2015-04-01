@@ -18,7 +18,8 @@ RUN npm install -g \
     grunt-cli \
     bower \
     less \
-    recess
+    recess \
+    bless
 
 ADD run.sh /run.sh
 RUN chmod u+x /run.sh
