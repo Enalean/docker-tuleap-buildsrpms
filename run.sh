@@ -5,6 +5,12 @@
 BASE_PATH="/tuleap";
 MAKE_OPTIONS=""
 
+function cleanup {
+    local base_path_owner="$(stat -c '%u:%g' "$BASE_PATH")"
+    chown -R "$base_path_owner" "$BASE_PATH"
+}
+trap cleanup EXIT
+
 options=`getopt -o h -l git: -- "$@"`
 
 eval set -- "$options"

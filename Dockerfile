@@ -1,6 +1,6 @@
 FROM ubuntu:14.04
 
-MAINTAINER Martin GOYOT <martin.goyot@enalean.com>
+MAINTAINER Thomas Gerbet <thomas.gerbet@enalean.com>
 
 RUN apt-get update && \
     apt-get install -y \
