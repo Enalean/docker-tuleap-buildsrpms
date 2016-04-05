@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 
 MAINTAINER Thomas Gerbet <thomas.gerbet@enalean.com>
 
@@ -9,7 +9,8 @@ RUN apt-get update && \
     build-essential \
     rpm \
     libfontconfig \
-    git
+    git \
+    cpio
 
 RUN ln -s /usr/bin/nodejs /usr/bin/node
 
@@ -19,7 +20,7 @@ RUN npm install -g \
     bower \
     less \
     recess \
-    bless
+    bless@3.0.3
 
 ADD run.sh /run.sh
 RUN chmod u+x /run.sh
