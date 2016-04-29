@@ -2,25 +2,33 @@ FROM ubuntu:16.04
 
 MAINTAINER Thomas Gerbet <thomas.gerbet@enalean.com>
 
-RUN apt-get update && \
-    apt-get install -y \
-    nodejs \
-    npm \
-    build-essential \
-    rpm \
-    libfontconfig \
-    git \
-    cpio
+RUN apt-get update \
+    && apt-get install -y \
+        nodejs \
+        npm \
+        build-essential \
+        rpm \
+        libfontconfig \
+        git \
+        cpio \
+    && apt-get clean
 
-RUN ln -s /usr/bin/nodejs /usr/bin/node
+# This is used by bower to disable interactive mode
+ENV CI true
+
+# Disable cli progress animation in npm
+RUN ln -s /usr/bin/nodejs /usr/bin/node \
+    && npm install --global npm \
+    && npm config set progress false
 
 ## Install base node modules
-RUN npm install -g \
+RUN npm install --global \
     grunt-cli \
     bower \
     less \
     recess \
-    bless@3.0.3
+    bless@3.0.3 \
+    phantomjs-prebuilt
 
 ADD run.sh /run.sh
 RUN chmod u+x /run.sh
