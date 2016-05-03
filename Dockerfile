@@ -6,12 +6,14 @@ RUN apt-get update \
     && apt-get install -y \
         nodejs \
         npm \
+        ruby-sass \
         build-essential \
         rpm \
         libfontconfig \
         git \
         cpio \
-    && apt-get clean
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # This is used by bower to disable interactive mode
 ENV CI true
