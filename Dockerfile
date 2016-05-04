@@ -29,6 +29,7 @@ RUN npm install --global \
     bower \
     less \
     recess \
+    bless@3.0.3 \
     phantomjs-prebuilt
 
 ADD run.sh /run.sh
