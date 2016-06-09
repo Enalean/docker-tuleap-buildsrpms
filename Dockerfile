@@ -13,7 +13,8 @@ RUN apt-get update \
         git \
         cpio \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && gem install scss_lint
 
 # This is used by bower to disable interactive mode
 ENV CI true
