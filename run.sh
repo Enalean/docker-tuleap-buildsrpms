@@ -2,16 +2,28 @@
 
 #set -e
 
-BASE_PATH="/tuleap";
+readonly BASE_PATH="/tuleap";
 MAKE_OPTIONS=""
 
 function cleanup {
-    local base_path_owner="$(stat -c '%u:%g' "$BASE_PATH")"
+    local base_path_owner
+    base_path_owner="$(stat -c '%u:%g' "$BASE_PATH")"
     chown -R "$base_path_owner" "$BASE_PATH"
 }
 trap cleanup EXIT
 
-options=`getopt -o h -l git: -- "$@"`
+function build_srpms {
+    local os_version=$1
+
+    if make -C $BASE_PATH/tools/rpm srpms-docker OS="$os_version" $MAKE_OPTIONS; then
+        mkdir -p "/srpms/$os_version"
+        mv /root/rpmbuild/SRPMS/* "/srpms/$os_version"
+    else
+        echo "SRPMs can not be built from $os_version"
+    fi
+}
+
+options=$(getopt -o h -l git: -- "$@")
 
 eval set -- "$options"
 while true
@@ -27,10 +39,5 @@ do
     esac
 done
 
-mkdir -p /srpms/rhel5
-mkdir -p /srpms/rhel6
-
-make -C $BASE_PATH/tools/rpm srpms-docker OS="rhel6" $MAKE_OPTIONS
-mv /root/rpmbuild/SRPMS/* /srpms/rhel6
-make -C $BASE_PATH/tools/rpm srpms-docker OS="rhel5" $MAKE_OPTIONS
-mv /root/rpmbuild/SRPMS/* /srpms/rhel5
+build_srpms 'rhel5'
+build_srpms 'rhel6'
