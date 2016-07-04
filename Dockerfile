@@ -31,6 +31,7 @@ RUN npm install --global \
     less \
     recess \
     bless@3.0.3 \
+    gulp-cli \
     phantomjs-prebuilt
 
 ADD run.sh /run.sh
