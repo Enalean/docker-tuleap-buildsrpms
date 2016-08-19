@@ -29,9 +29,6 @@ RUN ln -s /usr/bin/nodejs /usr/bin/node \
 RUN npm install --global \
     grunt-cli \
     bower \
-    less \
-    recess \
-    bless@3.0.3 \
     gulp-cli \
     phantomjs-prebuilt
 
