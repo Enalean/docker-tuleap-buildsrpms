@@ -12,6 +12,7 @@ RUN apt-get update \
         libfontconfig \
         git \
         cpio \
+        gettext \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && gem install scss_lint
