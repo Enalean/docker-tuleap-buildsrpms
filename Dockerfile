@@ -13,6 +13,7 @@ RUN apt-get update \
         git \
         cpio \
         gettext \
+        expect \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && gem install scss_lint
@@ -35,8 +36,8 @@ RUN npm install --global \
     gulp-cli \
     phantomjs-prebuilt
 
-ADD run.sh /run.sh
-RUN chmod u+x /run.sh
+COPY run.sh /run.sh
+COPY npm-login.sh /npm-login.sh
 
 VOLUME ["/tuleap"]
 VOLUME ["/srpms"]

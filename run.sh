@@ -12,6 +12,15 @@ function cleanup {
 }
 trap cleanup EXIT
 
+configure_npm_registry(){
+    if [ ! -z "$NPM_REGISTRY" ]; then
+        npm config set registry "$NPM_REGISTRY"
+    fi
+    if [ ! -z "$NPM_USER" -a ! -z "$NPM_PASSWORD" -a ! -z "$NPM_EMAIL" ]; then
+      ./npm-login.sh "$NPM_USER" "$NPM_PASSWORD" "$NPM_EMAIL"
+    fi
+}
+
 function build_srpms {
     local os_version=$1
 
@@ -38,6 +47,8 @@ do
         break ;;
     esac
 done
+
+configure_npm_registry
 
 build_srpms 'rhel5'
 build_srpms 'rhel6'
