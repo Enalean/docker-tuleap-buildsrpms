@@ -51,5 +51,4 @@ done
 
 configure_npm_registry
 
-build_srpms 'rhel5'
 build_srpms 'rhel6'
