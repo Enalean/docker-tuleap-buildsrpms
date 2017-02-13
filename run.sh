@@ -14,10 +14,11 @@ trap cleanup EXIT
 
 configure_npm_registry(){
     if [ ! -z "$NPM_REGISTRY" ]; then
-        npm config set registry "$NPM_REGISTRY"
-    fi
-    if [ ! -z "$NPM_USER" -a ! -z "$NPM_PASSWORD" -a ! -z "$NPM_EMAIL" ]; then
-      ./npm-login.sh "$NPM_USER" "$NPM_PASSWORD" "$NPM_EMAIL"
+        local registry="$NPM_REGISTRY"
+        if [ ! -z "$NPM_USER" -a ! -z "$NPM_PASSWORD" ]; then
+            registry="${registry/https:\/\//https:\/\/$NPM_USER:$NPM_PASSWORD\@}"
+        fi
+        yarn config set registry "$registry" > /dev/null 2>&1
     fi
 }
 

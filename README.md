@@ -10,4 +10,3 @@ The following environment variables can be used for the configuration:
   * ``NPM_REGISTRY``: registry address
   * ``NPM_USER``: user name used to log in into the registry
   * ``NPM_PASSWORD``: password of the user
-  * ``NPM_EMAIL``: public mail associated with the user
