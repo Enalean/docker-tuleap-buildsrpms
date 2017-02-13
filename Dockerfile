@@ -1,6 +1,7 @@
 FROM ubuntu:16.04
 
-RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 72ECF46A56B4AD39C907BBB71646B01B86E50310 \
+RUN apt-get update && apt-get install -y curl \
+    && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
     && echo "deb http://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list \
     && apt-get update \
     && apt-get install -y \
