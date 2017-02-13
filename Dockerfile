@@ -1,9 +1,8 @@
 FROM ubuntu:16.04
 
-RUN apt-get update && apt-get install -y curl \
-    && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-    && echo "deb http://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list \
-    && apt-get update \
+MAINTAINER Thomas Gerbet <thomas.gerbet@enalean.com>
+
+RUN apt-get update \
     && apt-get install -y \
         nodejs \
         npm \
@@ -14,19 +13,21 @@ RUN apt-get update && apt-get install -y curl \
         git \
         cpio \
         gettext \
-        yarn \
+        expect \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
-    && gem install scss_lint \
-    && ln -s /usr/bin/nodejs /usr/bin/node \
-    && npm install --global npm \
-    && npm config set progress false
+    && gem install scss_lint
 
 # This is used by bower to disable interactive mode
 ENV CI true
 
+# Disable cli progress animation in npm
+RUN ln -s /usr/bin/nodejs /usr/bin/node \
+    && npm install --global npm \
+    && npm config set progress false
+
 ## Install base node modules
-RUN yarn global add \
+RUN npm install --global \
     grunt-cli \
     bower \
     less \
@@ -36,6 +37,7 @@ RUN yarn global add \
     phantomjs-prebuilt
 
 COPY run.sh /run.sh
+COPY npm-login.sh /npm-login.sh
 
 VOLUME ["/tuleap"]
 VOLUME ["/srpms"]
