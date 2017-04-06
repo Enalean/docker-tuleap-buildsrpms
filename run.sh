@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#set -e
+set -e
 
 readonly BASE_PATH="/tuleap";
 MAKE_OPTIONS=""
@@ -23,6 +23,7 @@ configure_npm_registry(){
 
 function build_srpms {
     local os_version=$1
+    local target=$2
 
     if make -C $BASE_PATH/tools/rpm srpms-docker OS="$os_version" $MAKE_OPTIONS; then
         mkdir -p "/srpms/$os_version"
@@ -51,3 +52,10 @@ done
 configure_npm_registry
 
 build_srpms 'rhel6'
+
+# Added as of Tuleap 9.6.99.27 to ease introduction of RHEL7
+# build whitout breaking all patches.
+# Test can be removed after 9.7 release.
+if grep -q SRPMS= tools/rpm/Makefile; then
+    build_srpms 'rhel7'
+fi
