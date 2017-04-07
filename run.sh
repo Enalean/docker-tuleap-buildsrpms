@@ -56,6 +56,6 @@ build_srpms 'rhel6'
 # Added as of Tuleap 9.6.99.27 to ease introduction of RHEL7
 # build whitout breaking all patches.
 # Test can be removed after 9.7 release.
-if grep -q SRPMS= tools/rpm/Makefile; then
+if grep -q SRPMS= $BASE_PATH/tools/rpm/Makefile; then
     build_srpms 'rhel7'
 fi
