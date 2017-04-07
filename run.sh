@@ -5,6 +5,7 @@ set -e
 readonly SOURCE_PATH='/tuleap';
 readonly WORK_DIR="$(mktemp --directory)";
 MAKE_OPTIONS=""
+OS_VERSION=rhel6
 
 configure_npm_registry(){
     if [ ! -z "$NPM_REGISTRY" ]; then
@@ -31,7 +32,7 @@ function build_srpms {
     fi
 }
 
-options=$(getopt -o h -l git: -- "$@")
+options=$(getopt -o h -l git:,os: -- "$@")
 
 eval set -- "$options"
 while true
@@ -39,6 +40,9 @@ do
     case "$1" in
     --git)
         MAKE_OPTIONS="$MAKE_OPTIONS GIT_BRANCH=$2";
+        shift 2;;
+    --os)
+        OS_VERSION=$2
         shift 2;;
     --)
         shift 1; break ;;
@@ -48,14 +52,6 @@ do
 done
 
 configure_npm_registry
-
 copy_sources_to_workdir
 
-build_srpms 'rhel6'
-
-# Added as of Tuleap 9.6.99.27 to ease introduction of RHEL7
-# build whitout breaking all patches.
-# Test can be removed after 9.7 release.
-if grep -q SRPMS= "$WORK_DIR/tools/rpm/Makefile"; then
-    build_srpms 'rhel7'
-fi
+build_srpms $OS_VERSION
