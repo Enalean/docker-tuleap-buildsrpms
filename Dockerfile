@@ -1,7 +1,5 @@
 FROM ubuntu:16.04
 
-MAINTAINER Thomas Gerbet <thomas.gerbet@enalean.com>
-
 RUN apt-get update \
     && apt-get install -y \
         nodejs \
