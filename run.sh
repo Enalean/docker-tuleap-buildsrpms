@@ -16,7 +16,7 @@ configure_npm_registry(){
 }
 
 function copy_sources_to_workdir() {
-    cp -Rf "$SOURCE_PATH/"* "$WORK_DIR"
+    cp -faL "$SOURCE_PATH/"* "$WORK_DIR"
 }
 
 function build_srpms {
