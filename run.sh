@@ -2,15 +2,9 @@
 
 set -e
 
-readonly BASE_PATH="/tuleap";
+readonly SOURCE_PATH='/tuleap';
+readonly WORK_DIR="$(mktemp --directory)";
 MAKE_OPTIONS=""
-
-function cleanup {
-    local base_path_owner
-    base_path_owner="$(stat -c '%u:%g' "$BASE_PATH")"
-    chown -R "$base_path_owner" "$BASE_PATH"
-}
-trap cleanup EXIT
 
 configure_npm_registry(){
     if [ ! -z "$NPM_REGISTRY" ]; then
@@ -21,11 +15,15 @@ configure_npm_registry(){
     fi
 }
 
+function copy_sources_to_workdir() {
+    cp -Rf "$SOURCE_PATH/"* "$WORK_DIR"
+}
+
 function build_srpms {
     local os_version=$1
     local target=$2
 
-    if make -C $BASE_PATH/tools/rpm srpms-docker OS="$os_version" $MAKE_OPTIONS; then
+    if make -C "$WORK_DIR/tools/rpm" srpms-docker OS="$os_version" $MAKE_OPTIONS; then
         mkdir -p "/srpms/$os_version"
         mv /root/rpmbuild/SRPMS/* "/srpms/$os_version"
     else
@@ -51,11 +49,13 @@ done
 
 configure_npm_registry
 
+copy_sources_to_workdir
+
 build_srpms 'rhel6'
 
 # Added as of Tuleap 9.6.99.27 to ease introduction of RHEL7
 # build whitout breaking all patches.
 # Test can be removed after 9.7 release.
-if grep -q SRPMS= tools/rpm/Makefile; then
+if grep -q SRPMS= "$WORK_DIR/tools/rpm/Makefile"; then
     build_srpms 'rhel7'
 fi
