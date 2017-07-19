@@ -30,9 +30,6 @@ RUN ln -s /usr/bin/nodejs /usr/bin/node \
 RUN npm install --global \
     grunt-cli \
     bower \
-    less \
-    recess \
-    bless@3.0.3 \
     gulp-cli && \
     npm install --no-save phantomjs-prebuilt && \
     mv /node_modules/phantomjs-prebuilt /usr/local/lib/node_modules/phantomjs-prebuilt && \
