@@ -27,7 +27,7 @@ ENV CI true
 
 # Disable cli progress animation in npm
 RUN ln -s /usr/bin/nodejs /usr/bin/node \
-    && npm install --global npm@5 \
+    && npm install --global npm@5.4.2 \
     && npm config set progress false
 
 ## Install base node modules
