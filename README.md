@@ -1,6 +1,9 @@
 docker-tuleap-buildsrpm
 =========================
 
+This repo is not maintained anymore, check [tuleap-generated-files-builder](https://tuleap.net/plugins/git/tuleap/docker/tuleap-generated-files-builder)
+and [docker-tuleap-buildrpms](https://github.com/Enalean/docker-tuleap-buildrpms).
+
 This image is intended to build srpm from Tuleap Sources.
 
 ## Choose your NPM registry and user
